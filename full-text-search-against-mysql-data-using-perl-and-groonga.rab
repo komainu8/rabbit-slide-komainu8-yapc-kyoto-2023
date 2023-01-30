@@ -1,0 +1,32 @@
+= タイトル
+
+# : subtitle
+#    サブタイトル
+: author
+   Horimoto Yasuhiro
+# : institution
+#    所属
+# : content-source
+#    イベント名
+: date
+   2023-03-19
+: allotted-time
+   35m
+: start-time
+   2023-03-19
+: end-time
+   2028-12-17
+# : theme
+#    default
+
+= 最初のスライド
+
+  * 項目1
+  * 項目2
+  * 項目3
+
+= 二番目のスライド
+
+  # image
+  # src = https://raw.github.com/rabbit-shocker/rabbit/master/sample/lavie.png
+  # relative_height = 100

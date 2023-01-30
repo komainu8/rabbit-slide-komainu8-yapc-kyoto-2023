@@ -1,0 +1,27 @@
+---
+id: yapc-kyoto-2023
+base_name: full-text-search-against-mysql-data-using-perl-and-groonga
+tags:
+- rabbit
+- mysql
+- groonga
+- fts
+- yapckyoto
+presentation_date: '2023-03-19'
+presentation_start_time: 
+presentation_end_time: 
+version: 2023.3.19.0
+licenses: []
+slideshare_id: 
+speaker_deck_id: 
+vimeo_id: 
+youtube_id: 
+width: 1280
+height: 960
+author:
+  markup_language: :rd
+  name: Horimoto Yasuhiro
+  email: horimoto@clear-code.com
+  rubygems_user: komainu8
+  slideshare_user: 
+  speaker_deck_user: 
