@@ -10,7 +10,7 @@ CC BY-SA 4.0
 
 原著作者：堀本泰弘
 
-=== Groongaのロゴ
+=== Groonga・PGroonga・Mroonga・Rroongaのロゴ
 
 CC BY 3.0
 
