@@ -1,32 +1,100 @@
-= タイトル
+= Perlと全文検索エンジンGroongaでMySQLの\nデータを高速に全文検索する
 
 # : subtitle
 #    サブタイトル
 : author
-   Horimoto Yasuhiro
-# : institution
-#    所属
-# : content-source
-#    イベント名
+   堀本 泰弘
+: institution
+   株式会社クリアコード
+: content-source
+   YAPC::Kyoto 2023
 : date
    2023-03-19
 : allotted-time
    35m
 : start-time
-   2023-03-19
+   2023-03-19T10:00+09:00
 : end-time
-   2028-12-17
-# : theme
-#    default
+   2023-03-19T10:35+09:00
+: theme
+   .
 
-= 最初のスライド
 
-  * 項目1
-  * 項目2
-  * 項目3
-
-= 二番目のスライド
+= 自己紹介
 
   # image
-  # src = https://raw.github.com/rabbit-shocker/rabbit/master/sample/lavie.png
-  # relative_height = 100
+  # src = images/self-introduction.png
+  # relative_height = 107
+
+= 今日のテーマ
+
+MySQLのデータを高速に全文検索する！
+
+= 目次
+
+  * 全文検索とは？
+  * Groongaとは？
+  * Groongaを使ってMySQLのデータを検索できると何が嬉しいの？
+  * どうやってMySQLのデータを全文検索するの？
+
+= 目次
+
+  * どうやってPerlからGroongaを呼び出すの？
+  * どうやってMySQLのデータをGroongaに同期するの？
+  * 実際に使うにはどうすればいいの？
+
+= 全文検索とは？
+
+((*全*))ての((*文*))書から特定の文字列を\n((*検索*))する
+
+= 全文検索とは？
+
+例えば？
+
+* Webページの検索(Google)
+* ECサイトの検索(Amazon, 楽天, メルカリ etc...)
+* grep
+
+= 全文検索とは？
+
+膨大な量のテキストを対象に入力されたキーワードに関連する情報を返す
+
+= Groongaとは？
+
+* 国産全文検索エンジン
+
+= Groongaとは？
+
+* オープンソース
+
+= Groongaとは？
+
+* 爆速
+* 登録した情報は即時検索可能
+* 更新中でも検索性能が落ちない
+
+= Groongaとは？
+
+ベンチマーク
+InnoDBとの比較
+ElasticSearhcとの比較（できたら）
+
+== Groongaを使ってMySQLのデータを検索できると何が嬉しいの？
+
+hogehoge
+
+== どうやってMySQLのデータを全文検索するの？
+
+piyopiyo
+
+== どうやってPerlからGroongaを呼び出すの？
+
+fugafuga
+
+== どうやってMySQLのデータをGroongaに同期するの？
+
+hoge
+
+== 実際に使うにはどうすればいいの？
+
+piyo
