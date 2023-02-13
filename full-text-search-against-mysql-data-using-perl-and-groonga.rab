@@ -55,46 +55,148 @@ MySQLのデータを高速に全文検索する！
 * ECサイトの検索(Amazon, 楽天, メルカリ etc...)
 * grep
 
-= 全文検索とは？
-
-膨大な量のテキストを対象に入力されたキーワードに関連する情報を返す
-
 = Groongaとは？
 
-* 国産全文検索エンジン
+* オープンソースの国産全文検索エンジン
 
-= Groongaとは？
-
-* オープンソース
-
-= Groongaとは？
+= Groongaの特徴
 
 * 爆速
 * 登録した情報は即時検索可能
 * 更新中でも検索性能が落ちない
+* 毎月29日リリース
 
-= Groongaとは？
+== MySQLで全文検索
+
+よくあるアプローチ
+
+== MySQLで全文検索
+
+1. デフォルトの全文検索機能を使う
+2. ElasticSearchと連携
+
+== デフォルトの全文検索機能を使う
+
+* ((*遅い*))
+
+== ElasticSearchと連携
+
+* MySQLデータとElasticsearchの両方のデータをケアしないといけない
+* Elasticsearchが起動していないとデータの更新ができない
+
+== Groongaを使うと
+
+((*爆速*))
+
+== どのくらい速いの？
 
 ベンチマーク
-InnoDBとの比較
-ElasticSearhcとの比較（できたら）
 
-== Groongaを使ってMySQLのデータを検索できると何が嬉しいの？
+== Groongaを使うと
 
-hogehoge
+MySQLのデータだけケアすればいい
 
-== どうやってMySQLのデータを全文検索するの？
+Groongaが起動していなくてもデータの更新ができる
 
-piyopiyo
+== どうやってMySQLのデータをGroongaで検索するの？
 
-== どうやってPerlからGroongaを呼び出すの？
+構成図
 
-fugafuga
+== MySQLのレプリケーションモデル
 
-== どうやってMySQLのデータをGroongaに同期するの？
+構成図
 
-hoge
+== Groonga-HTTPの仕組み
 
-== 実際に使うにはどうすればいいの？
+構成図
 
-piyo
+== MySQL+Groongaの速度
+
+ベンチマーク
+
+== MySQL+Groongaのデータ管理
+
+MySQLのレプリケーションと同じ
+
+== MySQL+Groongaのデータ管理
+
+障害時は検索はできないが更新はできる
+
+== MySQL+Groongaのデータ管理
+
+障害発生中の更新はあとから同期できる
+特別のケアはいらない
+
+== groonga-deltaの使い方
+
+ドキュメントを参照
+
+== Groonga-HTTPの使い方
+
+ドキュメントを参照
+
+== Mroongaとの違い
+
+MySQLのストレージエンジンとしてGroongaを使える
+
+== Mroongaのメリット
+
+* SQLが使える
+* 使うまでの設定がない（パッケージをインストールして終わり）
+
+== Mroongaのデメリット
+
+* MySQL+Groongaに比べて遅い
+* Groongaの一部の機能を使えない
+
+== ユースケース
+
+気軽に高速な全文検索を使いたい
+
+== ユースケース
+
+Mroonga
+
+== ユースケース
+
+とにかく速度がほしい
+
+== ユースケース
+
+ファセット検索などGroongaにしかない機能を使いたい
+
+== ユースケース
+
+MySQL + Groonga
+
+== Groongaについての情報
+
+リリース自慢会
+https://www.youtube.com/playlist?list=PLLwHraQ4jf7PnA3GjI9v90DZq8ikLk0iN
+
+== Groongaについての情報
+
+グルカイ！（Groonga開発者に聞け！）
+https://www.youtube.com/playlist?list=PLLwHraQ4jf7PBol9aq5BoaM2Hnk6aCKs2
+
+== サポート
+
+MySQL + Groongaは敷居が高いが使いたい
+
+== サポート
+
+クリアコードのサポートサービス
+
+https://www.clear-code.com/services/groonga.html
+
+== サポート
+
+チャット
+
+https://gitter.im/groonga/ja
+
+== サポート
+
+GitHub Discussions
+
+https://github.com/groonga/groonga/discussions
