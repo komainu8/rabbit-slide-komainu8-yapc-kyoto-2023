@@ -30,43 +30,49 @@
 
 MySQLのデータを高速に全文検索する！
 
-= MySQL+全文検索のよくあるアプローチ
+= よくあるアプローチ
 
 1. InnoDBで全文検索
+
 2. Elasticsearchで全文検索
-3. Logstash+Elasticsearchで全文検索
+
+3. Elasticsearch+Logstashで全文検索
 
 = InnoDBで全文検索
 
-InnoDBはMySQLのデフォルトのストレージエンジン
+InnoDBとは？
 
-= InnoDBで全文検索：メリット
+= InnoDBで全文検索
+
+MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
+
+= InnoDBで全文検索\nメリット
 
 * 手軽に全文検索できる😊
 * 専用の構文を覚えなくていい😊
 * メンテナンスコスト小😊
 
-= InnoDBで全文検索：デメリット
+= InnoDBで全文検索\nデメリット
 
 * 遅い😔
 * 機能不足😔
 
-= Elasticsearchで全文検索：メリット
+= Elasticsearchで全文検索\nメリット
 
 * 多機能😊
-* 最近はSQLを使って全文検索できる😊
+* SQLを使って全文検索できる😊
 
-= Elasticsearchで全文検索：デメリット
+= Elasticsearchで全文検索\nデメリット
 
 * アプリケーションの実装が複雑になる😔
 
   障害時のケアなど考慮する点が多くなる
 
-= Logstash+Elasticsearchで全文検索：メリット
+= Elasticsearch+Logstash\nで全文検索\nメリット
 
 * アプリケーションの実装をシンプルにしつつElasticsearchを使える😊
 
-= Logstash+Elasticsearchで全文検索：デメリット
+= Elasticsearch+Logstash\nで全文検索\nデメリット
 
 * メンテナンスコスト：大😔
 
@@ -76,16 +82,16 @@ InnoDBはMySQLのデフォルトのストレージエンジン
 
 = 新たなアプローチ！
 
-4. MySQL+groonga-delta+Groongaで全文検索
+MySQL + groonga-delta + Groongaで\n全文検索
 
-= MySQL+groonga-delta+Groongaで全文検索：メリット
+= MySQL+\ngroonga-delta+Groongaで\n全文検索：メリット
 
-* 超速い😊
+* 速い😊
 * 多機能😊
 * アプリケーションの変更：小😊
 * メンテナンスコスト：そこそこ😊
 
-= MySQL+groonga-delta+Groongaで全文検索：デメリット
+= MySQL+\ngroonga-delta+Groongaで\n全文検索：デメリット
 
 * InnoDBを使う方法よりはメンテナンスコストが大きくなる😔
 * Groonga用のクエリーを使う必要がある（既存のSQLが使えない）😔
@@ -136,7 +142,7 @@ Groonga？
 
 = Groongaの特徴
 
-* 超速い
+* 速い
 * 登録した情報は即時検索可能
 * 更新中でも検索性能が落ちない
 * 多機能（同義語、ハイライト、オートコンプリート、etc...）
