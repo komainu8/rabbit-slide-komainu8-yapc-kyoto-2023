@@ -40,7 +40,7 @@ MySQLのデータを高速に全文検索する！
 
 = InnoDBで全文検索
 
-InnoDBとは？
+InnoDB？
 
 = InnoDBで全文検索
 
@@ -96,49 +96,19 @@ MySQL + groonga-delta + Groongaで\n全文検索
 * InnoDBを使う方法よりはメンテナンスコストが大きくなる😔
 * Groonga用のクエリーを使う必要がある（既存のSQLが使えない）😔
 
-== MySQL+groonga-delta+Groongaの構成
-
-構成図
-
-== MySQL+groonga-delta+Groongaのメリット
-
-* MySQLのデータだけケアすればいい
-
-  データの更新についてはアプリケーションを更新しなくていい
-
-== MySQL+groonga-delta+Groongaのメリット
-
-アプリケーションをシンプルにできる！
-
-== MySQL+groonga-delta+Groongaのメリット
-
-* Groongaが起動していなくてもデータの更新ができる
-
-  検索もやろうと思えばできる。遅いけど。。。
-
-== MySQL+groonga-delta+Groongaのメリット
-
-サービスを停止しなくていい！
-
-== どうやってMySQLのデータをGroongaで検索するの？
-
-構成図
-
-== MySQLのレプリケーションモデル
-
-構成図
-
-== Groonga-HTTPの仕組み
-
-構成図
-
 = ところで
 
 Groonga？
 
 = Groongaとは？
 
-* オープンソースの国産全文検索エンジン
+オープンソースの国産全文検索\nエンジン
+
+= Groongaとは？
+
+* 公式ドキュメント
+
+  https://groonga.org/ja/
 
 = Groongaの特徴
 
@@ -147,69 +117,108 @@ Groonga？
 * 更新中でも検索性能が落ちない
 * 多機能（同義語、ハイライト、オートコンプリート、etc...）
 
-== どのくらい速いの？
+= groonga-deltaとは？
 
-ベンチマーク
+groonga-delta？
 
+= groonga-deltaとは？
 
-== MySQL+Groongaの速度
+MySQLのデータをリアルタイムでGroongaに同期するツール
 
-ベンチマーク
+= できること
 
-== MySQL+Groongaのデータ管理
+* データの一括取り込み
+* INSERT/UPDATE/DELETEの結果をリアルタイムで取り込む
 
-MySQLのレプリケーションと同じ
+= MySQL+groonga-delta+Groongaの構成
 
-== MySQL+Groongaのデータ管理
+構成図
 
-障害時は検索はできないが更新はできる
+= MySQL+groonga-delta+Groongaの構成
 
-== MySQL+Groongaのデータ管理
+* マスターデータはMySQLで管理し、全文検索をGroongaで行う
 
-障害発生中の更新はあとから同期できる
-特別のケアはいらない
+= MySQL+groonga-delta+Groongaのメリット
 
-== groonga-deltaの使い方
+* MySQLのデータだけケアすればいい
 
-ドキュメントを参照
+  データの更新についてはアプリケーションを更新しなくていい
 
-== Groonga-HTTPの使い方
+= MySQL+groonga-delta+Groongaのメリット
 
-ドキュメントを参照
+アプリケーションをシンプルにできる！
 
-== Mroongaとの違い
+= MySQL+groonga-delta+Groongaのメリット
+
+* Groongaが起動していなくてもデータの更新ができる
+
+  検索もやろうと思えばできる。遅いけど。。。
+
+= MySQL+groonga-delta+Groongaのメリット
+
+サービスを停止しなくていい！
+
+= perlアプリケーションとGroongaの接続
+
+Groonga-HTTPを使う
+
+= Groonga-HTTPとは？
+
+Groonga-HTTP？
+
+= Groonga-HTTPとは？
+
+GroongaのHTTPクライアントライブラリー
+
+= Groonga-HTTPとは？
+
+* GroongaとHTTPでやり取りできる
+
+= Groonga-HTTPの仕組み
+
+構成図
+
+= Mroongaとの違い
 
 MySQLのストレージエンジンとしてGroongaを使える
 
-== Mroongaのメリット
+= Mroongaのメリット
 
 * SQLが使える
 * 使うまでの設定がない（パッケージをインストールして終わり）
 
-== Mroongaのデメリット
+= Mroongaのデメリット
 
 * MySQL+Groongaに比べて遅い
 * Groongaの一部の機能を使えない
+* クラッシュセーフではない
 
-== ユースケース
+= ユースケース
 
-気軽に高速な全文検索を使いたい
+* データ量が少ない
+* それほど速度を求めていない
+* 気軽に全文検索したい
 
-== ユースケース
+= ユースケース
+
+InnoDB
+
+= ユースケース
+
+* 気軽に高速な全文検索を使いたい場合
+
+= ユースケース
 
 Mroonga
 
-== ユースケース
+= ユースケース
 
-とにかく速度がほしい
+* とにかく速度がほしい
+* ファセット検索などGroongaにしかない機能を使いたい
 
-== ユースケース
+= ユースケース
 
-ファセット検索などGroongaにしかない機能を使いたい
-
-== ユースケース
-
-MySQL + Groonga
+MySQL + groonga-delta + Groonga
 
 == Groongaについての情報
 
