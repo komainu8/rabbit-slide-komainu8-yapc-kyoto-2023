@@ -57,6 +57,11 @@ MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
 * 遅い😔
 * 機能不足😔
 
+= Elasticsearchで全文検索\n構成
+
+  # image
+  # src = images/mysql-elasticsearch-normal.png
+
 = Elasticsearchで全文検索\nメリット
 
 * 多機能😊
@@ -66,7 +71,18 @@ MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
 
 * アプリケーションの実装が複雑になる😔
 
-  障害時のケアなど考慮する点が多くなる
+  * 更新失敗時のケアが必要
+  * Elasticsearchが起動していないと\nデータの更新ができない
+
+= Elasticsearchで全文検索\nデメリット
+
+  # image
+  # src = images/mysql-elasticsearch-abnormality.png
+
+= Elasticsearch+Logstash\nで全文検索\n構成
+
+  # image
+  # src = images/mysql-logstash-elasticsearch.png
 
 = Elasticsearch+Logstash\nで全文検索\nメリット
 
@@ -76,13 +92,23 @@ MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
 
 * メンテナンスコスト：大😔
 
-  MySQL、Elasticsearch、Logstashの３つをいい感じに運用しなければならない
+  * Logstashの死活監視が必要
+
+= Elasticsearch+Logstash\nで全文検索\nデメリット
 
 * データを削除するのに一手間必要😔
+
+  * logstashはレコードの削除を検出\nできない
+  * deleteフラグを作って別途削除が必要
 
 = 新たなアプローチ！
 
 MySQL + groonga-delta + Groongaで\n全文検索
+
+= MySQL+\ngroonga-delta+Groongaで\n全文検索：構成
+
+  # image
+  # src = images/mysql-groonga-delta-groonga.png
 
 = MySQL+\ngroonga-delta+Groongaで\n全文検索：メリット
 
@@ -132,7 +158,9 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 = MySQL+groonga-delta+Groongaの構成
 
-構成図
+  # image
+  # src = images/groonga-delta-degin.png
+  # relative_height = 80
 
 = MySQL+groonga-delta+Groongaの構成
 
@@ -142,7 +170,17 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 * MySQLのデータだけケアすればいい
 
-  データの更新についてはアプリケーションを更新しなくていい
+  MySQLのデータを更新するだけでいい
+
+= MySQL+groonga-delta+Groongaのメリット
+
+* マスターデータはMySQLが持っている
+
+  GroongaのDBが破損したら、切り捨てて、新規に作り直すことができる
+
+= MySQL+groonga-delta+Groongaのメリット
+
+がんばって復旧しなくていい！
 
 = MySQL+groonga-delta+Groongaのメリット
 
@@ -152,7 +190,7 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 * Groongaが起動していなくてもデータの更新ができる
 
-  検索もやろうと思えばできる。遅いけど。。。
+  Groonga復旧後に再接続すると自動的にデータが同期される
 
 = MySQL+groonga-delta+Groongaのメリット
 
@@ -176,7 +214,9 @@ GroongaのHTTPクライアントライブラリー
 
 = Groonga-HTTPの仕組み
 
-構成図
+  # image
+  # src = images/Groonga-HTTP-degin.png
+  # relative_height = 60
 
 = Mroongaとの違い
 
