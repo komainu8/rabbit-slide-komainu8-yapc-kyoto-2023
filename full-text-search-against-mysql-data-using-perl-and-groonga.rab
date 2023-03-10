@@ -196,7 +196,7 @@ Elastic社開発のログ収集ツール
 
 * データを削除するのに一手間必要😔
 
-  * logstashはレコードの削除を検出\nできない
+  * Logstashはレコードの削除を検出\nできない
   * deleteフラグを作って別途削除が必要
 
 = 新たなアプローチ！
@@ -213,7 +213,6 @@ MySQL + groonga-delta + Groongaで\n全文検索
 * 速い😊
 * 多機能😊
 * アプリケーションの変更：小😊
-* メンテナンスコスト：そこそこ😊
 
 = MySQL+\ngroonga-delta+Groongaで\n全文検索：デメリット
 
@@ -249,6 +248,11 @@ groonga-delta？
 
 MySQLのデータをリアルタイムでGroongaに同期するツール
 
+= groonga-deltaとは？
+
+  # image
+  # src = images/mysql-groonga-delta-groonga.png
+
 = できること
 
 * データの一括取り込み
@@ -271,9 +275,7 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 = MySQL+groonga-delta+Groongaのメリット
 
-* MySQLのデータだけケアすればいい
-
-  MySQLのデータを更新するだけでいい
+MySQLのデータだけケアすれば\nいい
 
 = MySQL+groonga-delta+Groongaのメリット
 
@@ -325,6 +327,12 @@ GroongaのHTTPクライアントライブラリー
   # image
   # src = images/Groonga-HTTP-degin.png
   # relative_height = 60
+
+= Groonga-HTTPの情報
+
+公式ドキュメント
+
+  * https://groonga.github.io/Groonga-HTTP/ja/
 
 = Mroongaとの違い
 
