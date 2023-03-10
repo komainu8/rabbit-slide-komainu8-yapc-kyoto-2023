@@ -139,7 +139,7 @@ MySQLの\nデフォルトの\nストレージ\nエンジン
 
     SELECT * FROM products
      WHERE MATCH(product_title, product_description, product_brand)
-           AGAINST(''+ハンドバッグ' IN BOOLEAN MODE');
+           AGAINST('+ハンドバッグ' IN BOOLEAN MODE');
 
 = Elasticsearchで全文検索
 
