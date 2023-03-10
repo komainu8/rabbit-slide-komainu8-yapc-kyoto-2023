@@ -30,6 +30,41 @@
 
 MySQLのデータを高速に全文検索する！
 
+= 今日のテーマ
+
+...の前に
+
+= 全文検索とは？
+
+= 全文検索とは？
+
+検索対象の((*全*))ての((*文*))書から特定の\n文字列を\n((*検索*))する
+
+= 例えば
+
+grepコマンド
+
+  # coderay shell
+
+  % grep Groonga ./*
+  ./docker-compose.yml:  Groonga:
+  ./docker-compose.yml:      MYSQL_DB: Groonga
+  ./docker-compose.yml:      MYSQL_PASSWORD: Groonga
+  ./docker-compose.yml:      MYSQL_USER: Groonga
+
+= 全文検索の対象
+
+(('tag:center'))
+(('tag:large'))
+(('tag:margin-bottom * 2'))
+大量のテキスト
+
+  * 例：Redmineのwiki・チケット
+  * 例：チャットログ
+  * 例：口コミ
+
+= MySQLで全文検索するには？
+
 = よくあるアプローチ
 
 1. InnoDBで全文検索
@@ -40,11 +75,34 @@ MySQLのデータを高速に全文検索する！
 
 = InnoDBで全文検索
 
-InnoDB？
+InnoDBとは？
 
 = InnoDBで全文検索
 
-MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
+MySQLの\nデフォルトの\nストレージ\nエンジン
+
+= ストレージエンジンとは？
+
+= ストレージエンジンとは？
+
+データの\n追加・更新・削除\n検索\nを実行する\nコンポーネント
+
+= ストレージエンジンとは？
+
+(('tag:center'))
+(('tag:large'))
+(('tag:margin-bottom * 2'))
+その他にも以下の機能を\n提供する
+
+  * トランザクション
+  * ロック
+  * リカバリー
+
+= ストレージエンジンとは？
+
+  # image
+  # src = images/db-arch.png
+  # relative_height = 100
 
 = InnoDBで全文検索\nメリット
 
@@ -56,6 +114,34 @@ MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
 
 * 遅い😔
 * 機能不足😔
+
+= 使い方
+
+  # coderay sql
+
+    CREATE TABLE products (
+      id int DEFAULT NULL,
+      product_id int DEFAULT NULL,
+      product_title text,
+      product_description text,
+      product_bullet_point text,
+      product_brand text,
+      product_color text,
+      product_locale text,
+      FULLTEXT KEY fts_description_idx
+        (product_title, product_description, product_brand) WITH PARSER ngram
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+= 使い方
+
+  # coderay sql
+
+    SELECT * FROM products
+     WHERE MATCH(product_title, product_description, product_brand)
+           AGAINST(''+ハンドバッグ' IN BOOLEAN MODE');
+
+= Elasticsearchで全文検索
 
 = Elasticsearchで全文検索\n構成
 
@@ -79,6 +165,18 @@ MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
   # image
   # src = images/mysql-elasticsearch-abnormality.png
 
+= Elasticsearch+Logstashで\n全文検索
+
+= Logstashとは?
+
+= Logstashとは?
+
+Elastic社開発のログ収集ツール
+
+= Logstashとは?
+
+異なる\nデータソースからデータを収集し\n一元化して収集できる
+
 = Elasticsearch+Logstash\nで全文検索\n構成
 
   # image
@@ -86,13 +184,13 @@ MySQLの\nデフォルトの\n汎用ストレージ\nエンジン
 
 = Elasticsearch+Logstash\nで全文検索\nメリット
 
-* アプリケーションの実装をシンプルにしつつElasticsearchを使える😊
+* アプリケーションの実装を\nシンプルにできる😊
 
 = Elasticsearch+Logstash\nで全文検索\nデメリット
 
 * メンテナンスコスト：大😔
 
-  * Logstashの死活監視が必要
+  * Logstashの死活監視も必要
 
 = Elasticsearch+Logstash\nで全文検索\nデメリット
 
@@ -164,7 +262,12 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 = MySQL+groonga-delta+Groongaの構成
 
-* マスターデータはMySQLで管理し、全文検索をGroongaで行う
+* マスターデータはMySQLで管理\n全文検索はGroongaで行う
+
+= MySQL+groonga-delta+Groongaの構成
+
+  # image
+  # src = images/mysql-groonga-delta-groonga.png
 
 = MySQL+groonga-delta+Groongaのメリット
 
@@ -180,11 +283,16 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 = MySQL+groonga-delta+Groongaのメリット
 
+  # image
+  # src = images/new-groonga.png
+
+= MySQL+groonga-delta+Groongaのメリット
+
 がんばって復旧しなくていい！
 
 = MySQL+groonga-delta+Groongaのメリット
 
-アプリケーションをシンプルにできる！
+アプリケーションをシンプルに\nできる！
 
 = MySQL+groonga-delta+Groongaのメリット
 
@@ -196,7 +304,7 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 サービスを停止しなくていい！
 
-= perlアプリケーションとGroongaの接続
+= perlアプリケーションと\nGroongaの接続
 
 Groonga-HTTPを使う
 
@@ -210,7 +318,7 @@ GroongaのHTTPクライアントライブラリー
 
 = Groonga-HTTPとは？
 
-* GroongaとHTTPでやり取りできる
+* GroongaはHTTPでやり取り\nできる
 
 = Groonga-HTTPの仕組み
 
@@ -220,24 +328,34 @@ GroongaのHTTPクライアントライブラリー
 
 = Mroongaとの違い
 
-MySQLのストレージエンジンとしてGroongaを使える
+他にもMySQLのデータをGroongaで全文検索する方法
+
+= Mroonga
+
+= Mroongaとは？
+
+MySQLの\nストレージ\nエンジンとして\nGroongaを\n使える
 
 = Mroongaのメリット
 
-* SQLが使える
-* 使うまでの設定がない（パッケージをインストールして終わり）
+* SQLが使える😊
+* 使うまでの設定がない\n（パッケージをインストールして終わり）😊
 
 = Mroongaのデメリット
 
-* MySQL+Groongaに比べて遅い
-* Groongaの一部の機能を使えない
-* クラッシュセーフではない
+* MySQL+Groongaに比べて遅い😔
+* Groongaの一部の機能を使えない😔
+* クラッシュセーフではない😔
 
 = ユースケース
 
-* データ量が少ない
-* それほど速度を求めていない
-* 気軽に全文検索したい
+どの方法が\nどういうケースで有効なのか？
+
+= ユースケース
+
+* データ量が少ないケース
+* あまり速度を求めていないケース
+* 気軽に全文検索したいケース
 
 = ユースケース
 
@@ -245,7 +363,7 @@ InnoDB
 
 = ユースケース
 
-* 気軽に高速な全文検索を使いたい場合
+* 気軽に高速な全文検索を使いたいケース
 
 = ユースケース
 
@@ -253,41 +371,48 @@ Mroonga
 
 = ユースケース
 
-* とにかく速度がほしい
-* ファセット検索などGroongaにしかない機能を使いたい
+* とにかく速度がほしいケース
+* ファセット検索などGroongaにしかない機能を使いたいケース
 
 = ユースケース
 
 MySQL + groonga-delta + Groonga
 
-== Groongaについての情報
+= サポート
 
-リリース自慢会
-https://www.youtube.com/playlist?list=PLLwHraQ4jf7PnA3GjI9v90DZq8ikLk0iN
+GroongaやMroongaは\n敷居が高いが\n使いたい!
 
-== Groongaについての情報
+= サポート
 
-グルカイ！（Groonga開発者に聞け！）
-https://www.youtube.com/playlist?list=PLLwHraQ4jf7PBol9aq5BoaM2Hnk6aCKs2
+そんなときは
 
-== サポート
+= サポート
 
-MySQL + Groongaは敷居が高いが使いたい
+* チャット
 
-== サポート
+  https://gitter.im/groonga/ja
 
-クリアコードのサポートサービス
+= サポート
 
-https://www.clear-code.com/services/groonga.html
+* GitHub Discussions
 
-== サポート
+  https://github.com/groonga/groonga/discussions
 
-チャット
+= サポート
 
-https://gitter.im/groonga/ja
+* クリアコードのサポートサービス
 
-== サポート
+  https://www.clear-code.com/services/groonga.html
 
-GitHub Discussions
+= Groongaについての情報
 
-https://github.com/groonga/groonga/discussions
+* リリース自慢会
+
+  https://www.youtube.com/playlist?list=PLLwHraQ4jf7PnA3GjI9v90DZq8ikLk0iN
+
+= Groongaについての情報
+
+* グルカイ！\n（Groonga開発者に聞け！）
+
+  https://www.youtube.com/playlist?list=PLLwHraQ4jf7PBol9aq5BoaM2Hnk6aCKs2
+
