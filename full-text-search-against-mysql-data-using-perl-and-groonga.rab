@@ -19,7 +19,6 @@
 : theme
    .
 
-
 = 自己紹介
 
   # image
@@ -40,18 +39,6 @@ MySQLのデータを高速に全文検索する！
 
 検索対象の((*全*))ての((*文*))書から特定の\n文字列を\n((*検索*))する
 
-= 例えば
-
-grepコマンド
-
-  # coderay shell
-
-  % grep Groonga ./*
-  ./docker-compose.yml:  Groonga:
-  ./docker-compose.yml:      MYSQL_DB: Groonga
-  ./docker-compose.yml:      MYSQL_PASSWORD: Groonga
-  ./docker-compose.yml:      MYSQL_USER: Groonga
-
 = 全文検索の対象
 
 (('tag:center'))
@@ -59,13 +46,148 @@ grepコマンド
 (('tag:margin-bottom * 2'))
 大量のテキスト
 
+  * 例：ファイル
   * 例：Redmineのwiki・チケット
   * 例：チャットログ
   * 例：口コミ
 
-= MySQLで全文検索するには？
+= MySQLで((*Perl*))から((*高速に*))全文検索するには？
 
-= よくあるアプローチ
+= MySQL + groonga-delta + Groonga + Groonga-HTTP
+
+= Groonga？ groonga-delta？ Groonga-HTTP？
+
+= Groongaとは？
+
+オープンソースの国産全文検索\nエンジン
+
+= Groongaとは？
+
+* 公式ドキュメント
+
+  https://groonga.org/ja/
+
+= Groongaの特徴
+
+* ((*高速*))
+* 登録した情報は即時検索可能
+* 更新中でも検索性能が落ちない
+* ((*多機能*))（同義語、ハイライト、オートコンプリート、etc...）
+* ((*HTTPでやり取りできる*))
+
+= Groonga-HTTPとは？
+
+GroongaのHTTPクライアントライブラリー
+
+= Groonga-HTTPの仕組み
+
+  # image
+  # src = images/Groonga-HTTP-degin.png
+  # relative_height = 60
+
+= Groonga-HTTPを使わない場合
+
+Request
+
+  # coderay HTTP
+
+    http://127.0.0.1:10041/d/select?table=Test&...
+
+= Groonga-HTTPを使わない場合
+
+Response
+
+  # coderay json
+
+    JSON
+
+= Groonga-HTTPを使う場合
+
+Request/Response
+
+  # coderay perl
+
+    use Groonga::HTTP;
+
+  my $groonga = Groonga::HTTP->new;
+  my @result = $groonga->select(
+     table => 'Entries',
+  );
+
+= Groonga-HTTPの情報
+
+公式ドキュメント
+
+  * https://groonga.github.io/Groonga-HTTP/ja/
+
+= groonga-deltaとは？
+
+groonga-delta？
+
+= groonga-deltaとは？
+
+MySQLのデータをリアルタイムでGroongaに同期するツール
+
+= groonga-deltaとは？
+
+  # image
+  # src = images/mysql-groonga-delta-groonga.png
+
+= できること
+
+* データの一括取り込み
+* INSERT/UPDATE/DELETEの結果をリアルタイムで取り込む
+
+
+= MySQL+groonga-delta+Groongaの構成
+
+  # image
+  # src = images/groonga-delta-degin.png
+  # relative_height = 80
+
+= MySQL+groonga-delta+Groongaの構成
+
+* マスターデータはMySQLで管理\n全文検索はGroongaで行う
+
+= MySQL+groonga-delta+Groongaの構成
+
+  # image
+  # src = images/mysql-groonga-delta-groonga.png
+
+= MySQL+groonga-delta+Groongaのメリット
+
+MySQLのデータだけケアすれば\nいい
+
+= MySQL+groonga-delta+Groongaのメリット
+
+* マスターデータはMySQLが持っている
+
+  GroongaのDBが破損したら、切り捨てて、新規に作り直すことができる
+
+= MySQL+groonga-delta+Groongaのメリット
+
+  # image
+  # src = images/new-groonga.png
+
+= MySQL+groonga-delta+Groongaのメリット
+
+がんばって復旧しなくていい！
+
+= MySQL+groonga-delta+Groongaのメリット
+
+アプリケーションをシンプルに\nできる！
+
+= MySQL+groonga-delta+Groongaのメリット
+
+* Groongaが起動していなくてもデータの更新ができる
+
+  Groonga復旧後に再接続すると自動的にデータが同期される
+
+= MySQL+groonga-delta+Groongaのメリット
+
+更新を停止しなくていい！
+
+= その他のアプローチ
 
 1. InnoDBで全文検索
 
@@ -120,14 +242,10 @@ MySQLの\nデフォルトの\nストレージ\nエンジン
   # coderay sql
 
     CREATE TABLE products (
-      id int DEFAULT NULL,
       product_id int DEFAULT NULL,
       product_title text,
       product_description text,
-      product_bullet_point text,
       product_brand text,
-      product_color text,
-      product_locale text,
       FULLTEXT KEY fts_description_idx
         (product_title, product_description, product_brand) WITH PARSER ngram
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -150,15 +268,14 @@ MySQLの\nデフォルトの\nストレージ\nエンジン
 
 = Elasticsearchで全文検索\nメリット
 
+* InnoDBより速い😊
 * 多機能😊
-* SQLを使って全文検索できる😊
 
 = Elasticsearchで全文検索\nデメリット
 
 * アプリケーションの実装が複雑になる😔
 
   * 更新失敗時のケアが必要
-  * Elasticsearchが起動していないと\nデータの更新ができない
 
 = Elasticsearchで全文検索\nデメリット
 
@@ -199,141 +316,6 @@ Elastic社開発のログ収集ツール
   * Logstashはレコードの削除を検出\nできない
   * deleteフラグを作って別途削除が必要
 
-= 新たなアプローチ！
-
-MySQL + groonga-delta + Groongaで\n全文検索
-
-= MySQL+\ngroonga-delta+Groongaで\n全文検索：構成
-
-  # image
-  # src = images/mysql-groonga-delta-groonga.png
-
-= MySQL+\ngroonga-delta+Groongaで\n全文検索：メリット
-
-* 速い😊
-* 多機能😊
-* アプリケーションの変更：小😊
-
-= MySQL+\ngroonga-delta+Groongaで\n全文検索：デメリット
-
-* InnoDBを使う方法よりはメンテナンスコストが大きくなる😔
-* Groonga用のクエリーを使う必要がある（既存のSQLが使えない）😔
-
-= ところで
-
-Groonga？
-
-= Groongaとは？
-
-オープンソースの国産全文検索\nエンジン
-
-= Groongaとは？
-
-* 公式ドキュメント
-
-  https://groonga.org/ja/
-
-= Groongaの特徴
-
-* 速い
-* 登録した情報は即時検索可能
-* 更新中でも検索性能が落ちない
-* 多機能（同義語、ハイライト、オートコンプリート、etc...）
-
-= groonga-deltaとは？
-
-groonga-delta？
-
-= groonga-deltaとは？
-
-MySQLのデータをリアルタイムでGroongaに同期するツール
-
-= groonga-deltaとは？
-
-  # image
-  # src = images/mysql-groonga-delta-groonga.png
-
-= できること
-
-* データの一括取り込み
-* INSERT/UPDATE/DELETEの結果をリアルタイムで取り込む
-
-= MySQL+groonga-delta+Groongaの構成
-
-  # image
-  # src = images/groonga-delta-degin.png
-  # relative_height = 80
-
-= MySQL+groonga-delta+Groongaの構成
-
-* マスターデータはMySQLで管理\n全文検索はGroongaで行う
-
-= MySQL+groonga-delta+Groongaの構成
-
-  # image
-  # src = images/mysql-groonga-delta-groonga.png
-
-= MySQL+groonga-delta+Groongaのメリット
-
-MySQLのデータだけケアすれば\nいい
-
-= MySQL+groonga-delta+Groongaのメリット
-
-* マスターデータはMySQLが持っている
-
-  GroongaのDBが破損したら、切り捨てて、新規に作り直すことができる
-
-= MySQL+groonga-delta+Groongaのメリット
-
-  # image
-  # src = images/new-groonga.png
-
-= MySQL+groonga-delta+Groongaのメリット
-
-がんばって復旧しなくていい！
-
-= MySQL+groonga-delta+Groongaのメリット
-
-アプリケーションをシンプルに\nできる！
-
-= MySQL+groonga-delta+Groongaのメリット
-
-* Groongaが起動していなくてもデータの更新ができる
-
-  Groonga復旧後に再接続すると自動的にデータが同期される
-
-= MySQL+groonga-delta+Groongaのメリット
-
-サービスを停止しなくていい！
-
-= perlアプリケーションと\nGroongaの接続
-
-Groonga-HTTPを使う
-
-= Groonga-HTTPとは？
-
-Groonga-HTTP？
-
-= Groonga-HTTPとは？
-
-GroongaのHTTPクライアントライブラリー
-
-= Groonga-HTTPとは？
-
-* GroongaはHTTPでやり取り\nできる
-
-= Groonga-HTTPの仕組み
-
-  # image
-  # src = images/Groonga-HTTP-degin.png
-  # relative_height = 60
-
-= Groonga-HTTPの情報
-
-公式ドキュメント
-
-  * https://groonga.github.io/Groonga-HTTP/ja/
-
 = Mroongaとの違い
 
 他にもMySQLのデータをGroongaで全文検索する方法
@@ -351,7 +333,7 @@ MySQLの\nストレージ\nエンジンとして\nGroongaを\n使える
 
 = Mroongaのデメリット
 
-* MySQL+Groongaに比べて遅い😔
+* Groongaに比べて遅い😔
 * Groongaの一部の機能を使えない😔
 * クラッシュセーフではない😔
 
@@ -424,3 +406,4 @@ GroongaやMroongaは\n敷居が高いが\n使いたい!
 
   https://www.youtube.com/playlist?list=PLLwHraQ4jf7PBol9aq5BoaM2Hnk6aCKs2
 
+= ご清聴ありがとうございました！
