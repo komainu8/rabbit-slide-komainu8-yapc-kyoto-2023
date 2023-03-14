@@ -25,6 +25,10 @@
   # src = images/self-introduction.png
   # relative_height = 107
 
+= 本日の資料
+
+https://slide.rabbit-shocker.org/authors/komainu8/yapc-kyoto-2023
+
 = 今日のテーマ
 
 MySQLのデータを高速に全文検索する！
@@ -89,9 +93,17 @@ GroongaのHTTPクライアントライブラリー
 
 Request
 
-  # coderay HTTP
+  # coderay perl
 
-    http://127.0.0.1:10041/d/select?table=Test&...
+    use Data::Dumper;
+  use LWP::UserAgent;
+  $ua = LWP::UserAgent->new;
+  $ua->agent("MyApplication/1.0 ");
+
+  my $res = $ua->get('http://127.0.0.1:10041/d/select?table=Test');
+  if ($res->is_success) {
+    print Dumper $res;
+  }
 
 = Groonga-HTTPを使わない場合
 
@@ -103,16 +115,26 @@ Response
 
 = Groonga-HTTPを使う場合
 
+インストール
+
+  # coderay shell
+
+    % cpanm Groonga-HTTP
+
+= Groonga-HTTPを使う場合
+
 Request/Response
 
   # coderay perl
 
-    use Groonga::HTTP;
+    use Data::Dumper;
+  use Groonga::HTTP;
 
   my $groonga = Groonga::HTTP->new;
   my @result = $groonga->select(
      table => 'Entries',
   );
+  print Dumper \@result;
 
 = Groonga-HTTPの情報
 
@@ -334,7 +356,7 @@ MySQLの\nストレージ\nエンジンとして\nGroongaを\n使える
 = Mroongaのデメリット
 
 * Groongaに比べて遅い😔
-* Groongaの一部の機能を使えない😔
+* SQLを逸脱するような機能は使えない😔
 * クラッシュセーフではない😔
 
 = ユースケース
