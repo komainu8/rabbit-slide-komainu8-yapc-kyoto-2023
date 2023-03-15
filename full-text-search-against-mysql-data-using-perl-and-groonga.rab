@@ -95,14 +95,23 @@ Request
 
   # coderay perl
 
-    use Data::Dumper;
   use LWP::UserAgent;
+  use JSON;
+
   $ua = LWP::UserAgent->new;
   $ua->agent("MyApplication/1.0 ");
 
-  my $res = $ua->get('http://127.0.0.1:10041/d/select?table=Test');
+  my $res = $ua->get('http://127.0.0.1:10041/d/select?table=Site');
   if ($res->is_success) {
-    print Dumper $res;
+    my @decoded_contents = decode_json($res->content);
+    my $n_hits = $decoded_contents[0][1][0][0][0];
+
+    for (my $i = 2; $i < $n_hits+2; $i++) {
+      print "\n";
+      print "id=$decoded_contents[0][1][0][$i][0]\n";
+      print "_key=$decoded_contents[0][1][0][$i][1]\n";
+      print "title=$decoded_contents[0][1][0][$i][2]\n";
+    }
   }
 
 = Groonga-HTTPを使わない場合
@@ -111,7 +120,13 @@ Response
 
   # coderay json
 
-    JSON
+  id=1
+  _key=http://example.org/
+  title=This is test record 1!
+
+  id=2
+  _key=http://example.net/
+  title=test record 2.
 
 = Groonga-HTTPを使う場合
 
@@ -119,22 +134,39 @@ Response
 
   # coderay shell
 
-    % cpanm Groonga-HTTP
+    % cpanm Groonga::HTTP
 
 = Groonga-HTTPを使う場合
 
-Request/Response
+Request
 
   # coderay perl
 
-    use Data::Dumper;
   use Groonga::HTTP;
 
   my $groonga = Groonga::HTTP->new;
-  my @result = $groonga->select(
-     table => 'Entries',
-  );
-  print Dumper \@result;
+  my $result = $groonga->select(table => 'Site');
+
+  for (my $i = 0; $i < $result->{'n_hits'}; $i++) {
+    print "\n";
+    print "$result->{'records'}[$i]->{'_id'}\n";
+    print "$result->{'records'}[$i]->{'_key'}\n";
+    print "$result->{'records'}[$i]->{'title'}\n";
+  }
+
+= Groonga-HTTPを使う場合
+
+Response
+
+  # coderay perl
+
+  1
+  http://example.org/
+  This is test record 1!
+
+  2
+  http://example.net/
+  test record 2.
 
 = Groonga-HTTPの情報
 
@@ -160,12 +192,16 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 * データの一括取り込み
 * INSERT/UPDATE/DELETEの結果をリアルタイムで取り込む
 
-
 = MySQL+groonga-delta+Groongaの構成
 
   # image
   # src = images/groonga-delta-degin.png
   # relative_height = 80
+
+= MySQLのレプリケーションモデル
+
+  # image
+  # src = images/mysql-replication.png
 
 = MySQL+groonga-delta+Groongaの構成
 
@@ -281,6 +317,16 @@ MySQLの\nデフォルトの\nストレージ\nエンジン
      WHERE MATCH(product_title, product_description, product_brand)
            AGAINST('+ハンドバッグ' IN BOOLEAN MODE');
 
+= 使い方
+
+* IN BOOLEAN MODE
+
+  * 検索文字列の先頭の特定の文字が特別な意味を持つ
+
+    * +:AND検索
+    * -:NOT検索
+    * 演算子なし：OR検索
+
 = Elasticsearchで全文検索
 
 = Elasticsearchで全文検索\n構成
@@ -389,6 +435,17 @@ Mroonga
 = ユースケース
 
 MySQL + groonga-delta + Groonga
+
+= まとめ
+
+  # RT
+  caption = ユースケース
+
+  /, InnoDB, Mroonga, Groonga
+  データ量大, ☓, ○, ◎
+  速度, ☓, ○, ◎
+  機能, ☓, ○, ◎
+  リカバリー, ◎, ☓, ☓
 
 = サポート
 
