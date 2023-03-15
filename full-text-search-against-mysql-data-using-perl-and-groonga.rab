@@ -57,9 +57,17 @@ MySQLのデータを高速に全文検索する！
 
 = MySQLで((*Perl*))から((*高速に*))全文検索するには？
 
-= MySQL + groonga-delta + Groonga + Groonga-HTTP
+= MySQL + Groonga delta + Groonga + Groonga-HTTP
 
-= Groonga？ groonga-delta？ Groonga-HTTP？
+= 構成
+
+  # image
+  # src = images/mysql-groonga-delta-groonga-groonga-http.png
+  # relative_height = 90
+
+= Groonga？\n Groonga delta？\n Groonga-HTTP？
+
+= Groongaとは？
 
 = Groongaとは？
 
@@ -81,13 +89,24 @@ MySQLのデータを高速に全文検索する！
 
 = Groonga-HTTPとは？
 
-GroongaのHTTPクライアントライブラリー
+= Groonga-HTTPとは？
+
+GroongaのHTTPクライアント\nライブラリー
 
 = Groonga-HTTPの仕組み
 
   # image
-  # src = images/Groonga-HTTP-degin.png
-  # relative_height = 60
+  # src = images/mysql-groonga-delta-groonga-groonga-http.png
+  # relative_height = 90
+
+= Groonga-HTTPを使わない場合
+
+  # RT
+  caption = Site
+
+  id, _key, title
+  1, http://example.org/, This is test record 1!
+  2, http://example.net/, test record 2.
 
 = Groonga-HTTPを使わない場合
 
@@ -174,74 +193,74 @@ Response
 
   * https://groonga.github.io/Groonga-HTTP/ja/
 
-= groonga-deltaとは？
+= Groonga deltaとは？
 
-groonga-delta？
-
-= groonga-deltaとは？
+= Groonga deltaとは？
 
 MySQLのデータをリアルタイムでGroongaに同期するツール
 
-= groonga-deltaとは？
+= Groonga deltaとは？
 
   # image
-  # src = images/mysql-groonga-delta-groonga.png
+  # src = images/mysql-groonga-delta-groonga-groonga-http.png
+  # relative_height = 90
 
 = できること
 
 * データの一括取り込み
 * INSERT/UPDATE/DELETEの結果をリアルタイムで取り込む
 
-= MySQL+groonga-delta+Groongaの構成
+= MySQL+Groonga delta+Groongaの構成
 
   # image
   # src = images/groonga-delta-degin.png
   # relative_height = 80
 
-= MySQLのレプリケーションモデル
+= MySQLの\nレプリケーションモデル
 
   # image
   # src = images/mysql-replication.png
 
-= MySQL+groonga-delta+Groongaの構成
+= MySQL+Groonga delta+Groongaの構成
 
 * マスターデータはMySQLで管理\n全文検索はGroongaで行う
 
-= MySQL+groonga-delta+Groongaの構成
+= MySQL+Groonga delta+Groongaの構成
 
   # image
-  # src = images/mysql-groonga-delta-groonga.png
+  # src = images/mysql-groonga-delta-groonga-groonga-http.png
+  # relative_height = 90
 
-= MySQL+groonga-delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaのメリット
 
 MySQLのデータだけケアすれば\nいい
 
-= MySQL+groonga-delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaのメリット
 
 * マスターデータはMySQLが持っている
 
   GroongaのDBが破損したら、切り捨てて、新規に作り直すことができる
 
-= MySQL+groonga-delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaのメリット
 
   # image
   # src = images/new-groonga.png
 
-= MySQL+groonga-delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaのメリット
 
 がんばって復旧しなくていい！
 
-= MySQL+groonga-delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaのメリット
 
 アプリケーションをシンプルに\nできる！
 
-= MySQL+groonga-delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaのメリット
 
 * Groongaが起動していなくてもデータの更新ができる
 
   Groonga復旧後に再接続すると自動的にデータが同期される
 
-= MySQL+groonga-delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaのメリット
 
 更新を停止しなくていい！
 
@@ -252,6 +271,8 @@ MySQLのデータだけケアすれば\nいい
 2. Elasticsearchで全文検索
 
 3. Elasticsearch+Logstashで全文検索
+
+4. Mroongaで全文検索
 
 = InnoDBで全文検索
 
@@ -434,7 +455,7 @@ Mroonga
 
 = ユースケース
 
-MySQL + groonga-delta + Groonga
+MySQL + Groonga delta + Groonga
 
 = まとめ
 
