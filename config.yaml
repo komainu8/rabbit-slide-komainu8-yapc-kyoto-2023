@@ -11,7 +11,10 @@ presentation_date: '2023-03-19'
 presentation_start_time: 
 presentation_end_time: 
 version: 2023.3.19.2
-licenses: []
+licenses: [
+  CC-BY-SA-4.0,
+  CC BY 3.0
+]
 slideshare_id: 
 speaker_deck_id: 
 vimeo_id: 
