@@ -199,8 +199,6 @@ GroongaのHTTPクライアント\nライブラリー
 
 = Groonga-HTTPを使わない場合
 
-Request
-
   # coderay perl
 
   use LWP::UserAgent;
@@ -224,8 +222,6 @@ Request
 
 = Groonga-HTTPを使わない場合
 
-Response
-
   # coderay json
 
   id=1
@@ -246,8 +242,6 @@ Response
 
 = Groonga-HTTPを使う場合
 
-Request
-
   # coderay perl
 
   use Groonga::HTTP;
@@ -263,8 +257,6 @@ Request
   }
 
 = Groonga-HTTPを使う場合
-
-Response
 
   # coderay perl
 
