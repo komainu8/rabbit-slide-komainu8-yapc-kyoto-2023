@@ -1,6 +1,12 @@
 = Perlと全文検索エンジンGroongaでMySQLのデータを高速に全文検索する
 
-TODO: スライドの説明
+MySQLのデータを全文検索したいときの良くあるアプローチは以下の3つがありますが、それぞれ課題があります。
+
+1. MySQLのデフォルトのストレージエンジンInnoDBの全文検索機能を使う。
+2. 別途Elasticsearchを用意し、アプリケーションでMySQLとElasticsearchのデータを同期し、検索はElasticsearchで行う。
+3. 別途Elasticsearchを用意し、Logstashを使ってMySQLのデータをElasticsearchに同期する。
+
+上記のアプローチの課題を解決する方法として、GroongaとGroongaのデータをMySQLに取り込むツール、GroongaのHTTPでクライアントライブラリーを組み合わせた構成を紹介します。
 
 == ライセンス
 
