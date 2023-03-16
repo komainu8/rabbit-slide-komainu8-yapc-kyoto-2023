@@ -27,31 +27,120 @@
 
 = 今日のテーマ
 
-MySQLのデータを高速に全文検索する！
+MySQLのデータを((*高速*))に全文検索する！
 
-= 今日のテーマ
+= よくあるアプローチ
 
-...の前に
+* InnoDBで全文検索
+* Elasticsearchで全文検索
+* Elasticsearch+Logstashで\n全文検索
 
-= 全文検索とは？
+= InnoDBで全文検索
 
-= 全文検索とは？
+= InnoDBで全文検索\nメリット
 
-検索対象の((*全*))ての((*文*))書から特定の\n文字列を\n((*検索*))する
+* 手軽に全文検索できる😊
+* 専用の構文を覚えなくていい😊
+* メンテナンスコスト：小😊
 
-= 全文検索の対象
+= InnoDBで全文検索\nデメリット
 
-(('tag:center'))
-(('tag:large'))
-(('tag:margin-bottom * 2'))
-大量のテキスト
+* 遅い😔
+* 機能不足😔
 
-  * 例：ファイル
-  * 例：Redmineのwiki・チケット
-  * 例：チャットログ
-  * 例：口コミ
+= 使い方
 
-= MySQLで((*Perl*))から((*高速に*))全文検索するには？
+  # coderay sql
+
+    CREATE TABLE products (
+      product_id int DEFAULT NULL,
+      product_title text,
+      product_description text,
+      product_brand text,
+      FULLTEXT KEY fts_description_idx
+        (product_title, product_description, product_brand) WITH PARSER ngram
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+= 使い方
+
+  # coderay sql
+
+    SELECT * FROM products
+     WHERE MATCH(product_title, product_description, product_brand)
+           AGAINST('+ハンドバッグ' IN BOOLEAN MODE');
+
+= 使い方
+
+* IN BOOLEAN MODE
+
+  * 検索文字列の先頭の特定の文字が特別な意味を持つ
+
+    * +:AND検索
+    * -:NOT検索
+    * 演算子なし：OR検索
+
+= Elasticsearchで全文検索
+
+= Elasticsearchで全文検索\n構成
+
+  # image
+  # src = images/mysql-elasticsearch-normal.png
+  # relative_height = 60
+
+= Elasticsearchで全文検索\nメリット
+
+* InnoDBより速い😊
+* 多機能😊
+
+= Elasticsearchで全文検索\nデメリット
+
+* アプリケーションの実装が複雑になる😔
+
+  * 更新失敗時のケアが必要
+
+= Elasticsearchで全文検索\nデメリット
+
+  # image
+  # src = images/mysql-elasticsearch-abnormality.png
+  # relative_height = 60
+
+= Elasticsearch+Logstashで\n全文検索
+
+= Logstashとは?
+
+= Logstashとは?
+
+Elastic社開発のログ収集ツール
+
+= Logstashとは?
+
+データソースを\n一元化して収集\nできる
+
+= Elasticsearch+Logstash\nで全文検索\n構成
+
+  # image
+  # src = images/mysql-logstash-elasticsearch.png
+  # relative_height = 60
+
+= Elasticsearch+Logstash\nで全文検索\nメリット
+
+* アプリケーションの実装を\nシンプルにできる😊
+
+= Elasticsearch+Logstash\nで全文検索\nデメリット
+
+* メンテナンスコスト：大😔
+
+  * Logstashの死活監視も必要
+
+= Elasticsearch+Logstash\nで全文検索\nデメリット
+
+* データを削除するのに一手間必要😔
+
+  * Logstashはレコードの削除を検出\nできない
+  * deleteフラグを作って別途削除が必要
+
+= 新しいアプローチ！
 
 = MySQL + ((*Groonga delta*)) + ((*Groonga*)) + ((*Groonga-HTTP*))
 
@@ -225,68 +314,11 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 
 データ更新は((*MySQL*))\n全文検索は((*Groonga*))
 
-= 他のアプローチ
-
-* InnoDBで全文検索
-* Elasticsearchで全文検索
-* Elasticsearch+Logstashで\n全文検索
-* Mroongaで全文検索
-
-= InnoDBで全文検索
-
-= InnoDBで全文検索\nメリット
-
-* 手軽に全文検索できる😊
-* 専用の構文を覚えなくていい😊
-* メンテナンスコスト：小😊
-
-= InnoDBで全文検索\nデメリット
-
-* 遅い😔
-* 機能不足😔
-
-= MySQL+Groonga delta+Groongaなら！
-
 = MySQL+Groonga delta+Groongaなら！
 
 * 速い😊
 * 多機能😊
-
-= MySQL+Groonga delta+Groongaなら！
-
-* 専用の構文が必要😔
-* メンテナンスコスト：大😔
-
-= Elasticsearchで全文検索
-
-= Elasticsearchで全文検索\n構成
-
-  # image
-  # src = images/mysql-elasticsearch-normal.png
-  # relative_height = 60
-
-= Elasticsearchで全文検索\nメリット
-
-* InnoDBより速い😊
-* 多機能😊
-
-= Elasticsearchで全文検索\nデメリット
-
-* アプリケーションの実装が複雑になる😔
-
-  * 更新失敗時のケアが必要
-
-= Elasticsearchで全文検索\nデメリット
-
-  # image
-  # src = images/mysql-elasticsearch-abnormality.png
-  # relative_height = 60
-
-= MySQL+Groonga delta+Groongaなら！
-
-= MySQL+Groonga delta+Groongaなら！
-
-アプリケーションをシンプル\nにできる！
+* アプリケーションをシンプル\nにできる！
 
 = MySQL+Groonga delta+Groongaなら！
 
@@ -308,51 +340,18 @@ MySQLのデータだけケアすれば\nいい！
 
 Groongaに障害が起きても更新をケアしなくて\nいい！
 
-= MySQL+Groonga delta+Groongaのメリット
-
-  # image
-  # src = images/new-groonga.png
-
-= Elasticsearch+Logstashで\n全文検索
-
-= Logstashとは?
-
-= Logstashとは?
-
-Elastic社開発のログ収集ツール
-
-= Logstashとは?
-
-データソースを\n一元化して収集\nできる
-
-= Elasticsearch+Logstash\nで全文検索\n構成
-
-  # image
-  # src = images/mysql-logstash-elasticsearch.png
-  # relative_height = 60
-
-= Elasticsearch+Logstash\nで全文検索\nメリット
-
-* アプリケーションの実装を\nシンプルにできる😊
-
-= Elasticsearch+Logstash\nで全文検索\nデメリット
-
-* メンテナンスコスト：大😔
-
-  * Logstashの死活監視も必要
-
-= Elasticsearch+Logstash\nで全文検索\nデメリット
-
-* データを削除するのに一手間必要😔
-
-  * Logstashはレコードの削除を検出\nできない
-  * deleteフラグを作って別途削除が必要
-
 = MySQL+Groonga delta+Groongaなら！
 
 * データの削除もできる😊
 
-= Mroongaで全文検索
+= MySQL+Groonga delta+Groongaなら！
+
+* 専用の構文が必要😔
+* メンテナンスコスト：大😔
+
+= 他にもこんな方法が
+
+= Mroongaを使う
 
 = Mroongaとは？
 
@@ -368,12 +367,6 @@ MySQLの\nストレージ\nエンジンとして\nGroongaを\n使える
 * Groongaに比べて遅い😔
 * SQLを逸脱するような機能は使えない😔
 * クラッシュセーフではない😔
-
-= MySQL+Groonga delta+Groongaなら！
-
-* 速い😊
-* Groongaのすべての機能が使える😊
-* マスターデータはMySQLが管理😊
 
 = ユースケース
 
@@ -392,6 +385,7 @@ InnoDB
 = ユースケース
 
 * 気軽に高速な全文検索を使いたいケース
+* データリカバリーの方法が確立できている
 
 = ユースケース
 
