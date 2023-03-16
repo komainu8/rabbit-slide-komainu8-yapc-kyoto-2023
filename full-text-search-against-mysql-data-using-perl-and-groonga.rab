@@ -25,10 +25,6 @@
   # src = images/self-introduction.png
   # relative_height = 107
 
-= 本日の資料
-
-https://slide.rabbit-shocker.org/authors/komainu8/yapc-kyoto-2023
-
 = 今日のテーマ
 
 MySQLのデータを高速に全文検索する！
@@ -57,7 +53,7 @@ MySQLのデータを高速に全文検索する！
 
 = MySQLで((*Perl*))から((*高速に*))全文検索するには？
 
-= MySQL + Groonga delta + Groonga + Groonga-HTTP
+= MySQL + ((*Groonga delta*)) + ((*Groonga*)) + ((*Groonga-HTTP*))
 
 = 構成
 
@@ -65,9 +61,13 @@ MySQLのデータを高速に全文検索する！
   # src = images/mysql-groonga-delta-groonga-groonga-http.png
   # relative_height = 90
 
-= Groonga？\n Groonga delta？\n Groonga-HTTP？
+= Groongaとは？
 
 = Groongaとは？
+
+  # image
+  # src = images/mysql-groonga-delta-groonga-groonga-http.png
+  # relative_height = 90
 
 = Groongaとは？
 
@@ -91,13 +91,13 @@ MySQLのデータを高速に全文検索する！
 
 = Groonga-HTTPとは？
 
-GroongaのHTTPクライアント\nライブラリー
-
-= Groonga-HTTPの仕組み
-
   # image
   # src = images/mysql-groonga-delta-groonga-groonga-http.png
   # relative_height = 90
+
+= Groonga-HTTPとは？
+
+GroongaのHTTPクライアント\nライブラリー
 
 = Groonga-HTTPを使わない場合
 
@@ -105,8 +105,8 @@ GroongaのHTTPクライアント\nライブラリー
   caption = Site
 
   id, _key, title
-  1, http://example.org/, This is test record 1!
-  2, http://example.net/, test record 2.
+  1, http://example.org/, Example.org
+  2, http://example.net/, Example.net
 
 = Groonga-HTTPを使わない場合
 
@@ -141,11 +141,11 @@ Response
 
   id=1
   _key=http://example.org/
-  title=This is test record 1!
+  title=Example.org
 
   id=2
   _key=http://example.net/
-  title=test record 2.
+  title=Example.net
 
 = Groonga-HTTPを使う場合
 
@@ -181,11 +181,11 @@ Response
 
   1
   http://example.org/
-  This is test record 1!
+  Example.org
 
   2
   http://example.net/
-  test record 2.
+  Example.net
 
 = Groonga-HTTPの情報
 
@@ -205,6 +205,11 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
   # src = images/mysql-groonga-delta-groonga-groonga-http.png
   # relative_height = 90
 
+= MySQLの\nレプリケーションモデル
+
+  # image
+  # src = images/mysql-replication.png
+
 = できること
 
 * データの一括取り込み
@@ -213,140 +218,44 @@ MySQLのデータをリアルタイムでGroongaに同期するツール
 = MySQL+Groonga delta+Groongaの構成
 
   # image
-  # src = images/groonga-delta-degin.png
-  # relative_height = 80
-
-= MySQLの\nレプリケーションモデル
-
-  # image
-  # src = images/mysql-replication.png
-
-= MySQL+Groonga delta+Groongaの構成
-
-* マスターデータはMySQLで管理\n全文検索はGroongaで行う
-
-= MySQL+Groonga delta+Groongaの構成
-
-  # image
   # src = images/mysql-groonga-delta-groonga-groonga-http.png
   # relative_height = 90
 
-= MySQL+Groonga delta+Groongaのメリット
+= MySQL+Groonga delta+Groongaの構成
 
-MySQLのデータだけケアすれば\nいい
+データ更新は((*MySQL*))\n全文検索は((*Groonga*))
 
-= MySQL+Groonga delta+Groongaのメリット
+= 他のアプローチ
 
-* マスターデータはMySQLが持っている
-
-  GroongaのDBが破損したら、切り捨てて、新規に作り直すことができる
-
-= MySQL+Groonga delta+Groongaのメリット
-
-  # image
-  # src = images/new-groonga.png
-
-= MySQL+Groonga delta+Groongaのメリット
-
-がんばって復旧しなくていい！
-
-= MySQL+Groonga delta+Groongaのメリット
-
-アプリケーションをシンプルに\nできる！
-
-= MySQL+Groonga delta+Groongaのメリット
-
-* Groongaが起動していなくてもデータの更新ができる
-
-  Groonga復旧後に再接続すると自動的にデータが同期される
-
-= MySQL+Groonga delta+Groongaのメリット
-
-更新を停止しなくていい！
-
-= その他のアプローチ
-
-1. InnoDBで全文検索
-
-2. Elasticsearchで全文検索
-
-3. Elasticsearch+Logstashで全文検索
-
-4. Mroongaで全文検索
+* InnoDBで全文検索
+* Elasticsearchで全文検索
+* Elasticsearch+Logstashで\n全文検索
+* Mroongaで全文検索
 
 = InnoDBで全文検索
-
-InnoDBとは？
-
-= InnoDBで全文検索
-
-MySQLの\nデフォルトの\nストレージ\nエンジン
-
-= ストレージエンジンとは？
-
-= ストレージエンジンとは？
-
-データの\n追加・更新・削除\n検索\nを実行する\nコンポーネント
-
-= ストレージエンジンとは？
-
-(('tag:center'))
-(('tag:large'))
-(('tag:margin-bottom * 2'))
-その他にも以下の機能を\n提供する
-
-  * トランザクション
-  * ロック
-  * リカバリー
-
-= ストレージエンジンとは？
-
-  # image
-  # src = images/db-arch.png
-  # relative_height = 100
 
 = InnoDBで全文検索\nメリット
 
 * 手軽に全文検索できる😊
 * 専用の構文を覚えなくていい😊
-* メンテナンスコスト小😊
+* メンテナンスコスト：小😊
 
 = InnoDBで全文検索\nデメリット
 
 * 遅い😔
 * 機能不足😔
 
-= 使い方
+= MySQL+Groonga delta+Groongaなら！
 
-  # coderay sql
+= MySQL+Groonga delta+Groongaなら！
 
-    CREATE TABLE products (
-      product_id int DEFAULT NULL,
-      product_title text,
-      product_description text,
-      product_brand text,
-      FULLTEXT KEY fts_description_idx
-        (product_title, product_description, product_brand) WITH PARSER ngram
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+* 速い😊
+* 多機能😊
 
+= MySQL+Groonga delta+Groongaなら！
 
-= 使い方
-
-  # coderay sql
-
-    SELECT * FROM products
-     WHERE MATCH(product_title, product_description, product_brand)
-           AGAINST('+ハンドバッグ' IN BOOLEAN MODE');
-
-= 使い方
-
-* IN BOOLEAN MODE
-
-  * 検索文字列の先頭の特定の文字が特別な意味を持つ
-
-    * +:AND検索
-    * -:NOT検索
-    * 演算子なし：OR検索
+* 専用の構文が必要😔
+* メンテナンスコスト：大😔
 
 = Elasticsearchで全文検索
 
@@ -354,6 +263,7 @@ MySQLの\nデフォルトの\nストレージ\nエンジン
 
   # image
   # src = images/mysql-elasticsearch-normal.png
+  # relative_height = 60
 
 = Elasticsearchで全文検索\nメリット
 
@@ -370,6 +280,38 @@ MySQLの\nデフォルトの\nストレージ\nエンジン
 
   # image
   # src = images/mysql-elasticsearch-abnormality.png
+  # relative_height = 60
+
+= MySQL+Groonga delta+Groongaなら！
+
+= MySQL+Groonga delta+Groongaなら！
+
+アプリケーションをシンプル\nにできる！
+
+= MySQL+Groonga delta+Groongaなら！
+
+* マスターデータはMySQL
+
+  GroongaのDBが破損したら、\n切り捨てて新規に作り直すこと\nができる
+
+= MySQL+Groonga delta+Groongaなら！
+
+MySQLのデータだけケアすれば\nいい！
+
+= MySQL+Groonga delta+Groongaなら！
+
+* Groongaが起動していなくてもデータの更新ができる
+
+  Groonga復旧後に再接続すると自動的にデータが同期される
+
+= MySQL+Groonga delta+Groongaなら！
+
+Groongaに障害が起きても更新をケアしなくて\nいい！
+
+= MySQL+Groonga delta+Groongaのメリット
+
+  # image
+  # src = images/new-groonga.png
 
 = Elasticsearch+Logstashで\n全文検索
 
@@ -381,12 +323,13 @@ Elastic社開発のログ収集ツール
 
 = Logstashとは?
 
-異なる\nデータソースからデータを収集し\n一元化して収集できる
+データソースを\n一元化して収集\nできる
 
 = Elasticsearch+Logstash\nで全文検索\n構成
 
   # image
   # src = images/mysql-logstash-elasticsearch.png
+  # relative_height = 60
 
 = Elasticsearch+Logstash\nで全文検索\nメリット
 
@@ -405,11 +348,11 @@ Elastic社開発のログ収集ツール
   * Logstashはレコードの削除を検出\nできない
   * deleteフラグを作って別途削除が必要
 
-= Mroongaとの違い
+= MySQL+Groonga delta+Groongaなら！
 
-他にもMySQLのデータをGroongaで全文検索する方法
+* データの削除もできる😊
 
-= Mroonga
+= Mroongaで全文検索
 
 = Mroongaとは？
 
@@ -426,9 +369,15 @@ MySQLの\nストレージ\nエンジンとして\nGroongaを\n使える
 * SQLを逸脱するような機能は使えない😔
 * クラッシュセーフではない😔
 
+= MySQL+Groonga delta+Groongaなら！
+
+* 速い😊
+* Groongaのすべての機能が使える😊
+* マスターデータはMySQLが管理😊
+
 = ユースケース
 
-どの方法が\nどういうケースで有効なのか？
+どの方法が\nどういうケースで有効か？
 
 = ユースケース
 
@@ -466,7 +415,7 @@ MySQL + Groonga delta + Groonga
   データ量大, ☓, ○, ◎
   速度, ☓, ○, ◎
   機能, ☓, ○, ◎
-  リカバリー, ◎, ☓, ☓
+  運用, ◎, △, ☓
 
 = サポート
 
